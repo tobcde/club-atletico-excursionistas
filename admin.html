@@ -222,7 +222,7 @@ header{background:var(--surface);border-bottom:2px solid var(--primary);padding:
 .mat-cell-total{font-family:'Barlow Condensed',sans-serif;font-weight:700;color:var(--secondary);font-size:12px;}
 .mat-table tfoot td{background:var(--surface2);font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:11px;border-top:2px solid var(--border);}
 
-/* â”€â”€ ACTIVIDADES â”€â”€ */
+/* Ã¢ââ¬Ã¢ââ¬ ACTIVIDADES Ã¢ââ¬Ã¢ââ¬ */
 .act-chips{display:flex;flex-wrap:wrap;gap:4px;margin-top:6px;}
 .act-chip{display:inline-flex;align-items:center;gap:3px;padding:2px 7px;border-radius:10px;font-size:12px;font-weight:700;color:#fff;opacity:.92;}
 .emoji{font-family:'Apple Color Emoji','Segoe UI Emoji','Noto Color Emoji',sans-serif;font-style:normal;}
@@ -232,7 +232,7 @@ header{background:var(--surface);border-bottom:2px solid var(--primary);padding:
 .act-check-icono{font-size:18px;line-height:1;font-family:'Apple Color Emoji','Segoe UI Emoji','Noto Color Emoji',sans-serif;}
 .act-check-label{font-size:13px;font-weight:600;}
 
-/* â”€â”€ INSCRIPCIONES â”€â”€ */
+/* Ã¢ââ¬Ã¢ââ¬ INSCRIPCIONES Ã¢ââ¬Ã¢ââ¬ */
 .insc-row{display:flex;align-items:center;gap:8px;padding:8px 10px;border-radius:8px;background:var(--surface2);border:1px solid var(--border);margin-bottom:6px;}
 .insc-row.insc-baja{opacity:.5;}
 .insc-plan{font-size:13px;font-weight:700;flex:1;}
@@ -245,7 +245,7 @@ header{background:var(--surface);border-bottom:2px solid var(--primary);padding:
 .pago-plan-nombre{flex:1;font-size:13px;font-weight:600;}
 .pago-plan-monto{font-size:13px;font-weight:700;color:var(--secondary);}
 
-/* â”€â”€ EMOJI PICKER â”€â”€ */
+/* Ã¢ââ¬Ã¢ââ¬ EMOJI PICKER Ã¢ââ¬Ã¢ââ¬ */
 .emoji-picker-wrap{position:relative;}
 .emoji-display{display:flex;align-items:center;gap:8px;padding:8px 12px;background:var(--surface2);border:1px solid var(--border);border-radius:8px;cursor:pointer;margin-top:4px;min-height:37px;}
 .emoji-display:hover{border-color:var(--primary);}
@@ -1088,7 +1088,7 @@ function aplicarBranding() {
   // Titulo y header
   document.title = nombreCorto + ' - Gestion';
 
-  // Logo â€” usar getDriveDisplay para embedding correcto
+  // Logo Ã¢â¬â usar getDriveDisplay para embedding correcto
   if(INST.logoUrl) {
     var logoSrc = getDriveDisplay(INST.logoUrl);
     var imgs = ['header-logo-img', 'login-logo-img'];
@@ -1215,7 +1215,7 @@ function inicializar() {
       '<p style="color:var(--muted);font-size:12px;text-transform:uppercase;letter-spacing:.08em;font-family:\'Barlow Condensed\',sans-serif;">Cargando datos completos...</p>' +
       '</div>';
 
-    // v3.9: actividades+precios vienen en getData (GAS v12) â†’ 2 llamadas paralelas
+    // v3.9: actividades+precios vienen en getData (GAS v12) Ã¢â â 2 llamadas paralelas
     if (d.actividades && d.actividades.length) {
       DB.actividades = d.actividades;
       renderListActividades(); poblarSelectActividad();
@@ -1297,7 +1297,7 @@ function getFechaDesde(p){ return new Date(p.anioD, p.mes-1, parseInt(p.diaD)||1
 function getFechaHasta(p){ var anioH = p.anioH||p.anioD, diaH = parseInt(p.diaH)||0; if(diaH===0) diaH = ultimoDiaMes(anioH, p.mes); return new Date(anioH, p.mes-1, diaH); }
 function getFechaVenc(p){ var v = new Date(getFechaHasta(p)); v.setDate(v.getDate() + (parseInt(p.gracia)||0)); return v; }
 
-// â”€â”€ INSCRIPCIONES â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// Ã¢ââ¬Ã¢ââ¬ INSCRIPCIONES Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬
 function getInscripcionesVigentes(dni, fecha) {
   // fecha: Date object. Si null usa hoy.
   var ref = fecha || new Date(); ref.setHours(0,0,0,0);
@@ -1431,7 +1431,7 @@ function calcularEstadoTiempoReal(f) {
   var hoy = new Date();
   var mesHoy = hoy.getFullYear() + '-' + String(hoy.getMonth()+1).padStart(2,'0');
 
-  // Todas las inscripciones del socio (vigentes y vencidas â€” para detectar deudas del pasado)
+  // Todas las inscripciones del socio (vigentes y vencidas Ã¢â¬â para detectar deudas del pasado)
   var inscTodas = (DB.inscripciones||[]).filter(function(i) {
     return (i.dni||'').toString().trim() === dni;
   });
@@ -1462,7 +1462,7 @@ function calcularEstadoTiempoReal(f) {
     if (!pm) return;
 
     var mD = insc.desde ? normFecha(insc.desde).substring(0,7) : '';
-    if (!mD || mD > mesHoy) return; // no empezÃ³ aÃºn
+    if (!mD || mD > mesHoy) return; // no empezÃÂ³ aÃÂºn
 
     // Hasta: fecha de baja si tiene, sino mes actual
     var mH = insc.hasta ? normFecha(insc.hasta).substring(0,7) : mesHoy;
@@ -1516,7 +1516,7 @@ function calcularEstadoTiempoReal(f) {
   };
 }
 
-// Alias de compatibilidad â€” todo el codigo existente llama a estadoCuotaV2
+// Alias de compatibilidad Ã¢â¬â todo el codigo existente llama a estadoCuotaV2
 // Lo redirigimos a la nueva funcion sin tocar cada llamada individual
 function estadoCuotaV2(f) { return calcularEstadoTiempoReal(f); }
 
@@ -1649,7 +1649,7 @@ function renderCuotas() {
     var pagado = pagosVigentes.reduce(function(s,c){ return s + Number(c[6]||0); }, 0);
     var ult = pagos.length ? pagos[pagos.length-1] : null;
     var hastaStr = pagosVigentes.length ? pagosVigentes.reduce(function(mx,c){ var h = parseDate(c[4]); return (!mx||h>mx)?h:mx; }, null) : null;
-    // Detectar cobros extraordinarios del perÃ­odo seleccionado
+    // Detectar cobros extraordinarios del perÃÂ­odo seleccionado
     var _planNombes = (cv.planNom||'').split(' + ');
     var _extras = pagos.filter(function(p){
       var mesPago = normFecha((p[5]||'').toString()).substring(0,7);
@@ -1782,7 +1782,7 @@ function abrirModalPago(dni, nom, pl, hoja, mo, plSoc, moSoc) {
         }
       } else if(_sc.estado === 'parcial') {
         _badge = '<span style="background:rgba(255,193,7,.15);color:#ffc107;font-size:11px;padding:2px 8px;border-radius:10px;margin-left:6px;">'
-          + 'pago parcial â€” falta $' + Number(_sc.faltaPesos).toLocaleString('es-AR') + '</span>';
+          + 'pago parcial Ã¢â¬â falta $' + Number(_sc.faltaPesos).toLocaleString('es-AR') + '</span>';
         _montoSugerido = _sc.faltaPesos;
       } else if(_sc.estado === 'debe') {
         _badge = '<span style="background:rgba(220,53,69,.15);color:var(--red);font-size:11px;padding:2px 8px;border-radius:10px;margin-left:6px;">'
@@ -2479,7 +2479,7 @@ function enviarComprobanteEmail() {
 
 // -- EMOJI PICKER ------------------------------------------------
 var EMOJIS_DEPORTES = [
-  // â”€â”€ DEPORTES DE PELOTA â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+  // Ã¢ââ¬Ã¢ââ¬ DEPORTES DE PELOTA Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬
   {e:'\u26BD',n:'futbol soccer',c:'deporte'},
   {e:'\uD83C\uDFC0',n:'basquet basketball',c:'deporte'},
   {e:'\uD83C\uDFD0',n:'voley volleyball',c:'deporte'},
@@ -2494,21 +2494,21 @@ var EMOJIS_DEPORTES = [
   {e:'\uD83C\uDFD1',n:'hockey cesped',c:'deporte'},
   {e:'\uD83C\uDFD2',n:'hockey hielo',c:'deporte'},
 
-  // â”€â”€ DEPORTES DE COMBATE â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+  // Ã¢ââ¬Ã¢ââ¬ DEPORTES DE COMBATE Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬
   {e:'\uD83E\uDD4A',n:'boxeo boxing',c:'deporte'},
   {e:'\uD83E\uDD4B',n:'artes marciales judo karate taekwondo',c:'deporte'},
   {e:'\uD83E\uDD3C',n:'lucha wrestling',c:'deporte'},
   {e:'\uD83E\uDD3A',n:'esgrima',c:'deporte'},
   {e:'\uD83D\uDEE1\uFE0F',n:'defensa personal',c:'deporte'},
 
-  // â”€â”€ DEPORTES ACUÃTICOS â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+  // Ã¢ââ¬Ã¢ââ¬ DEPORTES ACUÃÂTICOS Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬
   {e:'\uD83C\uDFCA',n:'natacion swimming',c:'deporte acuatico'},
   {e:'\uD83E\uDD3D',n:'polo acuatico waterpolo',c:'deporte acuatico'},
   {e:'\uD83C\uDFC4',n:'surf',c:'deporte acuatico'},
   {e:'\uD83E\uDD3F',n:'buceo snorkel',c:'deporte acuatico'},
   {e:'\uD83D\uDEA3',n:'remo kayak',c:'deporte acuatico'},
 
-  // â”€â”€ FITNESS Y GYM â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+  // Ã¢ââ¬Ã¢ââ¬ FITNESS Y GYM Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬
   {e:'\uD83C\uDFCB\uFE0F',n:'gimnasio pesas musculacion crossfit',c:'fitness'},
   {e:'\uD83D\uDCAA',n:'fuerza entrenamiento musculo',c:'fitness'},
   {e:'\uD83E\uDD38',n:'gimnasia acrobacia calistenia',c:'fitness'},
@@ -2519,16 +2519,16 @@ var EMOJIS_DEPORTES = [
   {e:'\u26F8\uFE0F',n:'patinaje hielo roller',c:'fitness deporte'},
   {e:'\uD83C\uDFBF',n:'esqui ski snowboard',c:'deporte invierno'},
 
-  // â”€â”€ YOGA Y BIENESTAR â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+  // Ã¢ââ¬Ã¢ââ¬ YOGA Y BIENESTAR Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬
   {e:'\uD83E\uDDD8',n:'yoga meditacion mindfulness pilates',c:'bienestar'},
-  {e:'\uD83C\uDF3F',n:'bienestar natural holÃ­stico',c:'bienestar'},
+  {e:'\uD83C\uDF3F',n:'bienestar natural holÃÂ­stico',c:'bienestar'},
   {e:'\u262F\uFE0F',n:'zen tai chi chi kung equilibrio',c:'bienestar'},
   {e:'\uD83C\uDF38',n:'flores bienestar relajacion femenino',c:'bienestar'},
   {e:'\uD83D\uDC86',n:'masaje relajacion spa',c:'bienestar'},
   {e:'\uD83E\uDEC1',n:'respiracion pranayama',c:'bienestar'},
   {e:'\uD83C\uDF0A',n:'fluidez movimiento',c:'bienestar'},
 
-  // â”€â”€ DANZA â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+  // Ã¢ââ¬Ã¢ââ¬ DANZA Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬
   {e:'\uD83D\uDC83',n:'danza baile tango salsa flamenco latina mujer',c:'danza'},
   {e:'\uD83D\uDD7A',n:'danza baile disco urbano hombre',c:'danza'},
   {e:'\uD83E\uDE70',n:'ballet danza clasica',c:'danza'},
@@ -2536,7 +2536,7 @@ var EMOJIS_DEPORTES = [
   {e:'\uD83E\uDEA9',n:'disco dance aerobics zumba',c:'danza'},
   {e:'\uD83C\uDFAD',n:'teatro danza movimiento expresion',c:'danza teatro'},
 
-  // â”€â”€ ARTES AÃ‰REAS Y CIRCO â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+  // Ã¢ââ¬Ã¢ââ¬ ARTES AÃâ°REAS Y CIRCO Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬
   {e:'\uD83C\uDFAA',n:'circo espectaculo acrobacias',c:'aereo circo'},
   {e:'\uD83E\uDD38',n:'acrobacia aerea tela seda',c:'aereo circo'},
   {e:'\uD83E\uDE82',n:'tela aerea seda trapecio vuelo',c:'aereo circo'},
@@ -2546,7 +2546,7 @@ var EMOJIS_DEPORTES = [
   {e:'\uD83C\uDF00',n:'acrobacia espiral giro',c:'aereo circo'},
   {e:'\uD83C\uDFA0',n:'carrusel espectaculo',c:'aereo circo'},
 
-  // â”€â”€ TEATRO Y ACTUACIÃ“N â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+  // Ã¢ââ¬Ã¢ââ¬ TEATRO Y ACTUACIÃâN Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬
   {e:'\uD83C\uDFAD',n:'teatro actuacion drama comedia',c:'teatro'},
   {e:'\uD83C\uDFAC',n:'teatro cinematica direccion',c:'teatro'},
   {e:'\uD83C\uDFA4',n:'actuacion voz canto comedia musical',c:'teatro musica'},
@@ -2554,14 +2554,14 @@ var EMOJIS_DEPORTES = [
   {e:'\uD83E\uDD21',n:'comedia clown payaso',c:'teatro comedia'},
   {e:'\uD83D\uDE02',n:'comedia humor stand up',c:'comedia'},
   {e:'\uD83C\uDCCF',n:'improvisacion juego teatral',c:'teatro comedia'},
-  {e:'\uD83D\uDCE2',n:'voz proyeccion locuciÃ³n',c:'teatro'},
+  {e:'\uD83D\uDCE2',n:'voz proyeccion locuciÃÂ³n',c:'teatro'},
   {e:'\uD83C\uDFA8',n:'artes escenicas expresion',c:'teatro'},
   {e:'\uD83E\uDE84',n:'magia ilusionismo',c:'teatro circo'},
   {e:'\uD83C\uDFA9',n:'magia teatro elegancia',c:'teatro'},
   {e:'\uD83D\uDC7A',n:'mascara teatro expresion',c:'teatro'},
   {e:'\uD83C\uDF9F\uFE0F',n:'espectaculo funcion evento',c:'teatro'},
 
-  // â”€â”€ MÃšSICA â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+  // Ã¢ââ¬Ã¢ââ¬ MÃÅ¡SICA Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬
   {e:'\uD83C\uDFB5',n:'musica canto vocal',c:'musica'},
   {e:'\uD83C\uDFB6',n:'musica melodia armonia',c:'musica'},
   {e:'\uD83C\uDFB8',n:'guitarra rock banda',c:'musica'},
@@ -2573,9 +2573,9 @@ var EMOJIS_DEPORTES = [
   {e:'\uD83E\uDE98',n:'percusion latin ritmo',c:'musica'},
   {e:'\uD83C\uDFB7',n:'saxofon jazz blues',c:'musica'},
   {e:'\uD83C\uDFA4',n:'canto vocal coach',c:'musica'},
-  {e:'\uD83C\uDFBC',n:'composicion musica teorÃ­a',c:'musica'},
+  {e:'\uD83C\uDFBC',n:'composicion musica teorÃÂ­a',c:'musica'},
 
-  // â”€â”€ COMEDIA MUSICAL â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+  // Ã¢ââ¬Ã¢ââ¬ COMEDIA MUSICAL Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬
   {e:'\uD83C\uDF1F',n:'estrella estrellato musical',c:'musical'},
   {e:'\u2728',n:'brillo show espectaculo musical',c:'musical'},
   {e:'\uD83C\uDF8A',n:'celebracion show gala',c:'musical'},
@@ -2584,7 +2584,7 @@ var EMOJIS_DEPORTES = [
   {e:'\uD83C\uDF80',n:'femenino elegante show',c:'musical'},
   {e:'\uD83D\uDC51',n:'rey reina estelar protagonista',c:'musical'},
 
-  // â”€â”€ IDIOMAS Y EDUCACIÃ“N â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+  // Ã¢ââ¬Ã¢ââ¬ IDIOMAS Y EDUCACIÃâN Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬
   {e:'\uD83D\uDCDA',n:'clases estudio academia',c:'educacion'},
   {e:'\u270F\uFE0F',n:'taller clase workshop',c:'educacion'},
   {e:'\uD83C\uDF93',n:'graduacion matricula certificacion',c:'educacion'},
@@ -2593,7 +2593,7 @@ var EMOJIS_DEPORTES = [
   {e:'\uD83D\uDD2C',n:'ciencias laboratorio',c:'educacion'},
   {e:'\uD83E\uDDEE',n:'matematicas calculos',c:'educacion'},
 
-  // â”€â”€ ADMINISTRACIÃ“N â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+  // Ã¢ââ¬Ã¢ââ¬ ADMINISTRACIÃâN Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬
   {e:'\uD83D\uDCCB',n:'planilla inscripcion lista',c:'admin'},
   {e:'\uD83D\uDCB0',n:'dinero pago cuota',c:'admin'},
   {e:'\uD83C\uDFC6',n:'trofeo copa campeonato',c:'admin'},
@@ -2637,7 +2637,7 @@ function filtrarEmojis(q) {
   renderEmojiGrid(lista);
 }
 function filtrarEmojisCat(cat) {
-  // Actualizar botÃ³n activo
+  // Actualizar botÃÂ³n activo
   document.querySelectorAll('.emoji-cat-btn').forEach(function(btn){
     var btnCat = btn.getAttribute('onclick').match(/filtrarEmojisCat\('([^']*)'\)/)?.[1] || '';
     btn.classList.toggle('active', btnCat === cat);
@@ -2756,7 +2756,7 @@ function crearSimple(t, id) {
   callScript({action:'addComplexItem', tabName:t, rowArray:[v], pass:TOKEN, _noRetry:true}, inicializar, function(e){ ocultarLoader(); alert('Error: '+e); });
 }
 
-// â”€â”€ ABM PROFESORES â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// Ã¢ââ¬Ã¢ââ¬ ABM PROFESORES Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬
 var profEditIdx = null;
 
 function renderListProfesores() {
@@ -2939,8 +2939,8 @@ function limpiarFormCat(){
   renderCatActsCheckboxes('');
 }
 
-// â”€â”€ INSCRIPCIONES MASIVAS â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
-// â”€â”€ ABM PRECIOS (Actividad x Categoria) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// Ã¢ââ¬Ã¢ââ¬ INSCRIPCIONES MASIVAS Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬
+// Ã¢ââ¬Ã¢ââ¬ ABM PRECIOS (Actividad x Categoria) Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬
 var precioEditIdx = null;
 
 function poblarSelectsPrecios() {
