@@ -16,7 +16,7 @@
   --orange:#fb923c;
 }
 *{margin:0;padding:0;box-sizing:border-box;}
-body{font-family:'Barlow','Apple Color Emoji','Segoe UI Emoji','Noto Color Emoji',sans-serif;background:var(--bg);color:var(--text);overflow-x:hidden;}
+body{visibility:hidden;font-family:'Barlow','Apple Color Emoji','Segoe UI Emoji','Noto Color Emoji',sans-serif;background:var(--bg);color:var(--text);overflow-x:hidden;}
 img,canvas,table{max-width:100%;}
 
 /* LOGIN */
@@ -222,7 +222,7 @@ header{background:var(--surface);border-bottom:2px solid var(--primary);padding:
 .mat-cell-total{font-family:'Barlow Condensed',sans-serif;font-weight:700;color:var(--secondary);font-size:12px;}
 .mat-table tfoot td{background:var(--surface2);font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:11px;border-top:2px solid var(--border);}
 
-/* Ã¢ââ¬Ã¢ââ¬ ACTIVIDADES Ã¢ââ¬Ã¢ââ¬ */
+/* Ã¢ï¿½?ï¿½ï¿½?ï¿½Ã¢ï¿½?ï¿½ï¿½?ï¿½ ACTIVIDADES Ã¢ï¿½?ï¿½ï¿½?ï¿½Ã¢ï¿½?ï¿½ï¿½?ï¿½ */
 .act-chips{display:flex;flex-wrap:wrap;gap:4px;margin-top:6px;}
 .act-chip{display:inline-flex;align-items:center;gap:3px;padding:2px 7px;border-radius:10px;font-size:12px;font-weight:700;color:#fff;opacity:.92;}
 .emoji{font-family:'Apple Color Emoji','Segoe UI Emoji','Noto Color Emoji',sans-serif;font-style:normal;}
@@ -232,7 +232,7 @@ header{background:var(--surface);border-bottom:2px solid var(--primary);padding:
 .act-check-icono{font-size:18px;line-height:1;font-family:'Apple Color Emoji','Segoe UI Emoji','Noto Color Emoji',sans-serif;}
 .act-check-label{font-size:13px;font-weight:600;}
 
-/* Ã¢ââ¬Ã¢ââ¬ INSCRIPCIONES Ã¢ââ¬Ã¢ââ¬ */
+/* Ã¢ï¿½?ï¿½ï¿½?ï¿½Ã¢ï¿½?ï¿½ï¿½?ï¿½ INSCRIPCIONES Ã¢ï¿½?ï¿½ï¿½?ï¿½Ã¢ï¿½?ï¿½ï¿½?ï¿½ */
 .insc-row{display:flex;align-items:center;gap:8px;padding:8px 10px;border-radius:8px;background:var(--surface2);border:1px solid var(--border);margin-bottom:6px;}
 .insc-row.insc-baja{opacity:.5;}
 .insc-plan{font-size:13px;font-weight:700;flex:1;}
@@ -245,7 +245,7 @@ header{background:var(--surface);border-bottom:2px solid var(--primary);padding:
 .pago-plan-nombre{flex:1;font-size:13px;font-weight:600;}
 .pago-plan-monto{font-size:13px;font-weight:700;color:var(--secondary);}
 
-/* Ã¢ââ¬Ã¢ââ¬ EMOJI PICKER Ã¢ââ¬Ã¢ââ¬ */
+/* Ã¢ï¿½?ï¿½ï¿½?ï¿½Ã¢ï¿½?ï¿½ï¿½?ï¿½ EMOJI PICKER Ã¢ï¿½?ï¿½ï¿½?ï¿½Ã¢ï¿½?ï¿½ï¿½?ï¿½ */
 .emoji-picker-wrap{position:relative;}
 .emoji-display{display:flex;align-items:center;gap:8px;padding:8px 12px;background:var(--surface2);border:1px solid var(--border);border-radius:8px;cursor:pointer;margin-top:4px;min-height:37px;}
 .emoji-display:hover{border-color:var(--primary);}
@@ -294,6 +294,7 @@ header{background:var(--surface);border-bottom:2px solid var(--primary);padding:
     <img id="header-logo-img" src="" alt="" onerror="this.style.display='none'" style="display:none;">
     <span id="header-nombre-org">SISTEMA DE <span style="color:var(--secondary)">GESTION</span></span>
   </div>
+  <div id="carga-progreso" style="display:none;flex:1;align-items:center;gap:8px;margin:0 12px;"></div>
   <div style="display:flex;gap:6px;align-items:center;flex-shrink:0;">
     <button class="btn btn-secondary" onclick="inicializar()" style="padding:6px 10px;font-size:12px;">&#x21BB;</button>
     <button class="btn btn-save" id="btn-nuevo-socio" onclick="abrirNuevoSocio()" style="padding:6px 12px;font-size:12px;">&#x2B; <span id="lbl-nuevo-socio">Socio</span></button>
@@ -611,6 +612,19 @@ header{background:var(--surface);border-bottom:2px solid var(--primary);padding:
     </div>
 
     <!-- Auto asignar -->
+    <!-- Descuento Hermanos -->
+    <div class="admin-card" id="cardDescHno">
+      <div class="admin-title">&#x1F46A; Descuento Hermanos</div>
+      <p style="font-size:12px;color:var(--muted);">Descuento fijo en $ para hermanos. Al inscribir a un hermano se autocompleta. Cuando sube el precio base, el descuento se mantiene y el monto efectivo se recalcula solo.</p>
+      <div>
+        <label class="filter-label">Descuento sugerido ($)</label>
+        <input id="inp-desc-hno" type="number" class="edit-input" style="width:100%;margin-top:4px;font-size:18px;padding:10px;" placeholder="ej: 2000" oninput="previewDescHno()">
+      </div>
+      <div id="desc-hno-preview" style="background:var(--bg);border-radius:8px;padding:10px;border:1px solid var(--border);font-size:12px;color:var(--muted);display:none;">
+        Ejemplo: precio base <span id="desc-hno-base">$10.000</span> &rarr; hermano paga <span id="desc-hno-result" style="color:#6de097;font-weight:700;"></span>
+      </div>
+      <button class="btn btn-save" onclick="guardarDescuentoHermanos()">GUARDAR DESCUENTO</button>
+    </div>
   </div>
 </div>
 
@@ -883,6 +897,15 @@ header{background:var(--surface);border-bottom:2px solid var(--primary);padding:
           <label class="filter-label">Observaciones</label>
           <input id="mi-obs" class="edit-input" style="width:100%;" placeholder="ej: baja programada junio">
         </div>
+        <div class="filter-group full" style="grid-column:1/-1;">
+          <label class="filter-label" style="color:var(--secondary);">&#x1F46A; Hermano de (DNI)</label>
+          <input id="mi-hno-de" class="edit-input" style="width:100%;border-color:var(--secondary-border);" placeholder="DNI del hermano titular (opcional)" oninput="miAutoDescuentoHno()">
+        </div>
+        <div class="filter-group full" style="grid-column:1/-1;">
+          <label class="filter-label" style="color:var(--secondary);">Descuento hermano ($)</label>
+          <input id="mi-descuento-hno" type="number" class="edit-input" style="width:100%;border-color:var(--secondary-border);" placeholder="0">
+          <small id="mi-descuento-preview" style="color:var(--muted);font-size:11px;margin-top:4px;display:none;"></small>
+        </div>
       </div>
       <button class="btn btn-save" onclick="confirmarInscripcion()" style="width:100%;padding:14px;font-size:14px;">GUARDAR INSCRIPCION</button>
     </div>
@@ -999,7 +1022,7 @@ header{background:var(--surface);border-bottom:2px solid var(--primary);padding:
 </div>
 
 <!-- VERSION BADGE -->
-<div id="vbadge" style="position:fixed;bottom:10px;right:10px;background:rgba(0,0,0,.7);border:1px solid var(--secondary);color:var(--secondary);font-family:'Barlow Condensed',sans-serif;font-size:11px;padding:3px 8px;border-radius:6px;z-index:9999;">v1.0.0</div>
+<div id="vbadge" style="position:fixed;bottom:10px;right:10px;background:rgba(0,0,0,.7);border:1px solid var(--secondary);color:var(--secondary);font-family:'Barlow Condensed',sans-serif;font-size:11px;padding:3px 8px;border-radius:6px;z-index:9999;">v1.2.0</div>
 
 <!-- PWA BANNER -->
 <div id="pwa-banner" style="display:none;position:fixed;bottom:0;left:0;right:0;z-index:9999;background:linear-gradient(135deg,var(--primary-dark),var(--bg));border-top:2px solid var(--primary);padding:14px 20px;align-items:center;gap:14px;">
@@ -1014,7 +1037,8 @@ header{background:var(--surface);border-bottom:2px solid var(--primary);padding:
 // ---------------------------------------------------------------
 //  CONFIGURACION - REEMPLAZAR ANTES DE DEPLOY
 // ---------------------------------------------------------------
-var SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyjwZWI8k7PwAQa-tJn3Cg_jKSq2-NX5pRgbZ3Z7T8GzorORNsyFRRR7lwf4w9Q1glD/exec';
+var SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzXEKkTx4RZqa5f6On5kFPxAlCRSzGF_rokYPTZxNdVa7nqdXh3iLkQyWJrUFQBOwYH/exec';
+document.body.style.visibility='visible';
                   
                   
 // ---------------------------------------------------------------
@@ -1026,6 +1050,8 @@ var TOKEN = '', itemSel = null, catEditIdx = null;
 var asistencias = [], asistActual = {}, pagoCtx = null, PERIODOS_EDIT = [];
 var INST = {}; // configuracion de la institucion en memoria
 var WA_CRED_KEY = 'sgd_wa_cred';
+var DESCUENTO_HNO_SUGERIDO = 0;
+var CARGA_COMPLETA = false; // descuento sugerido para hermanos en $
 
 // Columnas de la hoja (igual que excursionistas para compatibilidad)
 var COL = {
@@ -1088,7 +1114,7 @@ function aplicarBranding() {
   // Titulo y header
   document.title = nombreCorto + ' - Gestion';
 
-  // Logo Ã¢â¬â usar getDriveDisplay para embedding correcto
+  // Logo Ã¢ï¿½?ï¿½ï¿½?ï¿½ usar getDriveDisplay para embedding correcto
   if(INST.logoUrl) {
     var logoSrc = getDriveDisplay(INST.logoUrl);
     var imgs = ['header-logo-img', 'login-logo-img'];
@@ -1188,15 +1214,19 @@ function ocultarLoader(){ document.getElementById('loader').style.display='none'
 function inicializar() {
   if(!TOKEN) return;
   mostrarLoader('Conectando...');
-  callScript({action:'getData', pass:TOKEN}, function(d) {
-    if(d.error){ alert(d.error); ocultarLoader(); return; }
+
+  var configLista = false, jugadoresLista = false, cuotasLista = false, asistLista = false;
+  var totalJugadores = 0;
+
+  function todosListos() { return configLista && jugadoresLista && cuotasLista && asistLista; }
+
+  function intentarArrancar() {
+    if(!configLista || !jugadoresLista) return;
     document.getElementById('login-screen').style.display = 'none';
-    DB = d;
-    INST = d.institucion || {};
+    INST = DB.institucion || {};
     aplicarBranding();
     aplicarTerminologia();
     registrarHuella(TOKEN);
-    renderPlayers();
     poblarSelects(); poblarTurnosAsist(); poblarPeriodos(); poblarSelectsPrecios();
     renderListProfesores();
     renderList('listS', DB.sedes, 'Sedes');
@@ -1206,49 +1236,99 @@ function inicializar() {
     });
     renderPeriodosAdmin();
     document.getElementById('asistFecha').value = new Date().toISOString().split('T')[0];
-    ocultarLoader();
-
-    // Mostrar spinner en el grid hasta que cuotas y asistencias esten listas
-    document.getElementById('gridJugadores').innerHTML =
-      '<div style="grid-column:1/-1;text-align:center;padding:60px 20px;">' +
-      '<div class="spinner" style="margin:0 auto 16px;width:36px;height:36px;border-width:3px;"></div>' +
-      '<p style="color:var(--muted);font-size:12px;text-transform:uppercase;letter-spacing:.08em;font-family:\'Barlow Condensed\',sans-serif;">Cargando datos completos...</p>' +
-      '</div>';
-
-    // v3.9: actividades+precios vienen en getData (GAS v12) Ã¢â â 2 llamadas paralelas
-    if (d.actividades && d.actividades.length) {
-      DB.actividades = d.actividades;
+    if (DB.actividades && DB.actividades.length) {
       renderListActividades(); poblarSelectActividad();
       poblarSelectsPrecios(); renderCatActsCheckboxes(''); poblarSelectMasiva();
     }
-    if (d.precios) { DB.precios = d.precios; renderListPrecios(); }
-
-    var pendientes = 2;
-    function finCarga(){ if(--pendientes===0){ renderPlayers(); renderCuotas(); } }
-
-    callScript({action:'getCuotas', pass:TOKEN}, function(r){
-      if (r && r.cuotas) {
-        r.cuotas = r.cuotas.map(function(c) {
-          var esDeSheets = c.length<=10 && isNaN(Number(c[0])) && !isNaN(Number(c[3]));
-          if (esDeSheets) {
-            var hasta = c[8]||c[1];
-            var saldoRow = (c[9]!==undefined&&c[9]!=='') ? parseFloat(c[9]) : null;
-            return [c[3],c[4],c[2],hasta,hasta,c[1],c[5],c[6],'',c[7]||'',saldoRow];
-          }
-          return c;
-        });
-      }
-      CUOTAS_DB = r;
-      if (r && r.inscripciones) DB.inscripciones = r.inscripciones;
-      finCarga();
-    }, function(){ finCarga(); });
-
-    callScript({action:'getAsistencias', pass:TOKEN}, function(r){
-      asistencias = Array.isArray(r) ? r : (r && r.data ? r.data : []);
-      finCarga();
-    }, function(){ finCarga(); });
+    if (DB.precios) { renderListPrecios(); }
     cargarCamposExtra();
+    cargarDescuentoHermanos();
+    ocultarLoader();
+    renderPlayers();
+    if(totalJugadores > 100) cargarJugadoresBackground(100, totalJugadores);
+  }
+
+  // 1. getConfig
+  callScript({action:'getConfig', pass:TOKEN, _noRetry:true}, function(d) {
+    if(d.error){ alert('Error: ' + d.error); ocultarLoader(); return; }
+    DB.horarios    = d.horarios    || [];
+    DB.profesores  = d.profesores  || [];
+    DB.sedes       = d.sedes       || [];
+    DB.categorias  = d.categorias  || [];
+    DB.configPagos = d.configPagos || [];
+    DB.actividades = d.actividades || [];
+    DB.precios     = d.precios     || [];
+    DB.institucion = d.institucion || {};
+    configLista = true;
+    intentarArrancar();
   }, function(e){ alert('Error: ' + e); ocultarLoader(); });
+
+  // 2. getJugadores primer chunk
+  mostrarProgreso(0, 100, 100);
+  callScript({action:'getJugadores', offset:0, limit:100, pass:TOKEN, _noRetry:true}, function(r) {
+    if(r.error){ alert('Error: ' + r.error); ocultarLoader(); return; }
+    DB.jugadores = [[]].concat(r.jugadores);
+    totalJugadores = r.total;
+    mostrarProgreso(r.jugadores.length, r.total, 100);
+    jugadoresLista = true;
+    if(!r.hasMore) CARGA_COMPLETA = true;
+    intentarArrancar();
+  }, function(e){ alert('Error: ' + e); ocultarLoader(); });
+
+  // 3. getCuotas
+  callScript({action:'getCuotas', pass:TOKEN, _noRetry:true}, function(r){
+    if (r && r.cuotas) {
+      r.cuotas = r.cuotas.map(function(c) {
+        var esDeSheets = c.length<=10 && isNaN(Number(c[0])) && !isNaN(Number(c[3]));
+        if (esDeSheets) {
+          var hasta = c[8]||c[1];
+          var saldoRow = (c[9]!==undefined&&c[9]!=='') ? parseFloat(c[9]) : null;
+          return [c[3],c[4],c[2],hasta,hasta,c[1],c[5],c[6],'',c[7]||'',saldoRow];
+        }
+        return c;
+      });
+    }
+    CUOTAS_DB = r;
+    if (r && r.inscripciones) DB.inscripciones = r.inscripciones;
+    cuotasLista = true;
+    if(todosListos()) { renderPlayers(); renderCuotas(); }
+  }, function(){ cuotasLista = true; });
+
+  // 4. getAsistencias
+  callScript({action:'getAsistencias', pass:TOKEN, _noRetry:true}, function(r){
+    asistencias = Array.isArray(r) ? r : (r && r.data ? r.data : []);
+    asistLista = true;
+    if(todosListos()) { renderPlayers(); renderCuotas(); }
+  }, function(){ asistLista = true; });
+}
+
+function cargarJugadoresBackground(offset, total) {
+  if(offset >= total) {
+    CARGA_COMPLETA = true;
+    ocultarProgreso();
+    renderPlayers();
+    return;
+  }
+  callScript({action:'getJugadores', offset:offset, limit:100, pass:TOKEN, _noRetry:true}, function(r) {
+    if(!r || r.error || !r.jugadores) { ocultarProgreso(); return; }
+    DB.jugadores = DB.jugadores.concat(r.jugadores);
+    mostrarProgreso(DB.jugadores.length - 1, total, 100);
+    renderPlayers();
+    setTimeout(function() { cargarJugadoresBackground(offset + 100, total); }, 300);
+  }, function() { ocultarProgreso(); });
+}
+
+function mostrarProgreso(cargados, total, chunk) {
+  var el = document.getElementById('carga-progreso'); if(!el) return;
+  var pct = total > 0 ? Math.round(cargados / total * 100) : 0;
+  el.style.display = 'flex';
+  el.innerHTML = '<div style="font-size:10px;color:var(--muted);font-family:\'Barlow Condensed\';text-transform:uppercase;letter-spacing:.05em;">Cargando <b style="color:var(--secondary);">' + cargados + '</b>/' + total + '</div>'
+    + '<div style="flex:1;height:3px;background:var(--border);border-radius:2px;margin-left:8px;overflow:hidden;">'
+    + '<div style="height:100%;width:' + pct + '%;background:var(--secondary);transition:width .3s;border-radius:2px;"></div></div>';
+}
+
+function ocultarProgreso() {
+  var el = document.getElementById('carga-progreso'); if(el) el.style.display = 'none';
 }
 
 function renderAll() {
@@ -1297,7 +1377,7 @@ function getFechaDesde(p){ return new Date(p.anioD, p.mes-1, parseInt(p.diaD)||1
 function getFechaHasta(p){ var anioH = p.anioH||p.anioD, diaH = parseInt(p.diaH)||0; if(diaH===0) diaH = ultimoDiaMes(anioH, p.mes); return new Date(anioH, p.mes-1, diaH); }
 function getFechaVenc(p){ var v = new Date(getFechaHasta(p)); v.setDate(v.getDate() + (parseInt(p.gracia)||0)); return v; }
 
-// Ã¢ââ¬Ã¢ââ¬ INSCRIPCIONES Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬
+// Ã¢ï¿½?ï¿½ï¿½?ï¿½Ã¢ï¿½?ï¿½ï¿½?ï¿½ INSCRIPCIONES Ã¢ï¿½?ï¿½ï¿½?ï¿½Ã¢ï¿½?ï¿½ï¿½?ï¿½Ã¢ï¿½?ï¿½ï¿½?ï¿½Ã¢ï¿½?ï¿½ï¿½?ï¿½Ã¢ï¿½?ï¿½ï¿½?ï¿½Ã¢ï¿½?ï¿½ï¿½?ï¿½Ã¢ï¿½?ï¿½ï¿½?ï¿½Ã¢ï¿½?ï¿½ï¿½?ï¿½Ã¢ï¿½?ï¿½ï¿½?ï¿½Ã¢ï¿½?ï¿½ï¿½?ï¿½Ã¢ï¿½?ï¿½ï¿½?ï¿½Ã¢ï¿½?ï¿½ï¿½?ï¿½Ã¢ï¿½?ï¿½ï¿½?ï¿½Ã¢ï¿½?ï¿½ï¿½?ï¿½Ã¢ï¿½?ï¿½ï¿½?ï¿½Ã¢ï¿½?ï¿½ï¿½?ï¿½Ã¢ï¿½?ï¿½ï¿½?ï¿½Ã¢ï¿½?ï¿½ï¿½?ï¿½Ã¢ï¿½?ï¿½ï¿½?ï¿½Ã¢ï¿½?ï¿½ï¿½?ï¿½Ã¢ï¿½?ï¿½ï¿½?ï¿½Ã¢ï¿½?ï¿½ï¿½?ï¿½Ã¢ï¿½?ï¿½ï¿½?ï¿½Ã¢ï¿½?ï¿½ï¿½?ï¿½Ã¢ï¿½?ï¿½ï¿½?ï¿½Ã¢ï¿½?ï¿½ï¿½?ï¿½Ã¢ï¿½?ï¿½ï¿½?ï¿½Ã¢ï¿½?ï¿½ï¿½?ï¿½Ã¢ï¿½?ï¿½ï¿½?ï¿½Ã¢ï¿½?ï¿½ï¿½?ï¿½Ã¢ï¿½?ï¿½ï¿½?ï¿½Ã¢ï¿½?ï¿½ï¿½?ï¿½Ã¢ï¿½?ï¿½ï¿½?ï¿½Ã¢ï¿½?ï¿½ï¿½?ï¿½Ã¢ï¿½?ï¿½ï¿½?ï¿½Ã¢ï¿½?ï¿½ï¿½?ï¿½Ã¢ï¿½?ï¿½ï¿½?ï¿½Ã¢ï¿½?ï¿½ï¿½?ï¿½Ã¢ï¿½?ï¿½ï¿½?ï¿½Ã¢ï¿½?ï¿½ï¿½?ï¿½Ã¢ï¿½?ï¿½ï¿½?ï¿½Ã¢ï¿½?ï¿½ï¿½?ï¿½Ã¢ï¿½?ï¿½ï¿½?ï¿½Ã¢ï¿½?ï¿½ï¿½?ï¿½Ã¢ï¿½?ï¿½ï¿½?ï¿½Ã¢ï¿½?ï¿½ï¿½?ï¿½Ã¢ï¿½?ï¿½ï¿½?ï¿½Ã¢ï¿½?ï¿½ï¿½?ï¿½
 function getInscripcionesVigentes(dni, fecha) {
   // fecha: Date object. Si null usa hoy.
   var ref = fecha || new Date(); ref.setHours(0,0,0,0);
@@ -1333,13 +1413,18 @@ function renderInscripcionesModal(dni) {
     var hastaStr = i.hasta ? ' hasta ' + i.hasta : 'indefinida';
     var actObj = (DB.actividades||[]).find(function(a){ return a.nombre === i.plan; });
     var icono  = actObj ? actObj.icono : '';
+    var descHno = Number(i.descuentoHno) || 0;
+    var montoBase = Number(i.monto);
+    var montoEfectivo = descHno > 0 && descHno < montoBase ? montoBase - descHno : montoBase;
+    var badgeHno = i.hnoDe ? ' <span style="background:rgba(201,162,39,.2);color:var(--secondary);font-size:10px;padding:1px 6px;border-radius:8px;font-weight:700;">HNO DE ' + i.hnoDe + '</span>' : '';
+    var badgeDesc = descHno > 0 ? '<div style="font-size:10px;color:var(--muted);">Base $' + montoBase.toLocaleString('es-AR') + ' - $' + descHno.toLocaleString('es-AR') + '</div>' : '';
     return '<div class="insc-row' + (baja ? ' insc-baja' : '') + '">'
       + '<span style="font-size:18px;">' + (icono||'&#x1F4CB;') + '</span>'
       + '<div style="flex:1;">'
-      + '<div class="insc-plan">' + i.plan + (baja ? ' <span style="color:var(--red);font-size:10px;">[BAJA]</span>' : '') + '</div>'
+      + '<div class="insc-plan">' + i.plan + (baja ? ' <span style="color:var(--red);font-size:10px;">[BAJA]</span>' : '') + badgeHno + '</div>'
       + '<div class="insc-fechas">Desde ' + i.desde + ' &middot; ' + hastaStr + (i.obs ? ' &middot; ' + i.obs : '') + '</div>'
       + '</div>'
-      + '<div class="insc-monto">$' + Number(i.monto).toLocaleString('es-AR') + '</div>'
+      + '<div style="text-align:right;"><div class="insc-monto">$' + montoEfectivo.toLocaleString('es-AR') + '</div>' + badgeDesc + '</div>'
       + (!baja ? '<button class="insc-btn" onclick="darDeBajaInscripcion(' + i._row + ',\'' + dniStr + '\')">BAJA</button>' : '')
       + '</div>';
   }).join('');
@@ -1360,6 +1445,10 @@ function abrirModalInscripcion() {
   document.getElementById('mi-desde').value = new Date().toISOString().split('T')[0];
   document.getElementById('mi-hasta').value = '';
   document.getElementById('mi-obs').value = '';
+  document.getElementById('mi-hno-de').value = '';
+  document.getElementById('mi-descuento-hno').value = '';
+  var _prev = document.getElementById('mi-descuento-preview');
+  if(_prev){ _prev.style.display = 'none'; _prev.innerText = ''; }
   document.getElementById('modalInscripcion').classList.add('open');
 }
 
@@ -1380,20 +1469,22 @@ function miAutoMonto() {
 
 function confirmarInscripcion() {
   if(!itemSel) return;
-  var plan  = document.getElementById('mi-plan').value;
-  var monto = document.getElementById('mi-monto').value;
-  var desde = document.getElementById('mi-desde').value;
-  var hasta = document.getElementById('mi-hasta').value;
-  var obs   = document.getElementById('mi-obs').value.trim();
+  var plan         = document.getElementById('mi-plan').value;
+  var monto        = document.getElementById('mi-monto').value;
+  var desde        = document.getElementById('mi-desde').value;
+  var hasta        = document.getElementById('mi-hasta').value;
+  var obs          = document.getElementById('mi-obs').value.trim();
+  var descuentoHno = parseFloat(document.getElementById('mi-descuento-hno').value) || 0;
+  var hnoDe        = document.getElementById('mi-hno-de').value.trim();
   if(!plan || !monto || !desde) return alert('Plan, monto y fecha desde son obligatorios');
   var f = DB.jugadores[itemSel.arrIdx];
   var dni = (f[COL.DNI]||f[COL.TARJETA]||'').toString();
   var nombre = (f[COL.APELLIDO]||'') + ' ' + (f[COL.NOMBRE]||'');
-  var row = [dni, nombre, plan, Number(monto), desde, hasta||'', obs];
+  var row = [dni, nombre, plan, Number(monto), desde, hasta||'', obs, descuentoHno||'', hnoDe||''];
   mostrarLoader('Guardando inscripcion...');
   callScript({action:'addInscripcion', rowArray:row, pass:TOKEN, _noRetry:true}, function(r){
     var _row = r && r.fila ? r.fila : (DB.inscripciones.length + 2);
-    DB.inscripciones.push({dni:dni, nombre:nombre, plan:plan, monto:Number(monto), desde:desde, hasta:hasta||'', obs:obs, _row:_row});
+    DB.inscripciones.push({dni:dni, nombre:nombre, plan:plan, monto:Number(monto), desde:desde, hasta:hasta||'', obs:obs, descuentoHno:descuentoHno, hnoDe:hnoDe, _row:_row});
     renderInscripcionesModal(dni);
     cerrarModalInscripcion();
     ocultarLoader();
@@ -1431,7 +1522,7 @@ function calcularEstadoTiempoReal(f) {
   var hoy = new Date();
   var mesHoy = hoy.getFullYear() + '-' + String(hoy.getMonth()+1).padStart(2,'0');
 
-  // Todas las inscripciones del socio (vigentes y vencidas Ã¢â¬â para detectar deudas del pasado)
+  // Todas las inscripciones del socio (vigentes y vencidas Ã¢ï¿½?ï¿½ï¿½?ï¿½ para detectar deudas del pasado)
   var inscTodas = (DB.inscripciones||[]).filter(function(i) {
     return (i.dni||'').toString().trim() === dni;
   });
@@ -1448,7 +1539,11 @@ function calcularEstadoTiempoReal(f) {
     return (!mD || mD <= mesHoy) && (!mH || mH >= mesHoy);
   });
 
-  var planMonto = inscVigentes.reduce(function(s,i){ return s + (Number(i.monto)||0); }, 0);
+  var planMonto = inscVigentes.reduce(function(s,i){
+    var m = Number(i.monto) || 0;
+    var d = Number(i.descuentoHno) || 0;
+    return s + (d > 0 && d < m ? m - d : m);
+  }, 0);
   var planNom   = inscVigentes.map(function(i){ return i.plan; }).join(' + ');
 
   // Calcular estado por cada inscripcion
@@ -1459,10 +1554,12 @@ function calcularEstadoTiempoReal(f) {
 
   inscTodas.forEach(function(insc) {
     var pm = Number(insc.monto) || 0;
+    var descHno = Number(insc.descuentoHno) || 0;
+    if(descHno > 0 && descHno < pm) pm = pm - descHno;
     if (!pm) return;
 
     var mD = insc.desde ? normFecha(insc.desde).substring(0,7) : '';
-    if (!mD || mD > mesHoy) return; // no empezÃÂ³ aÃÂºn
+    if (!mD || mD > mesHoy) return; // no empezï¿½?Â³ aï¿½?Âºn
 
     // Hasta: fecha de baja si tiene, sino mes actual
     var mH = insc.hasta ? normFecha(insc.hasta).substring(0,7) : mesHoy;
@@ -1516,13 +1613,8 @@ function calcularEstadoTiempoReal(f) {
   };
 }
 
-// Alias de compatibilidad Ã¢â¬â todo el codigo existente llama a estadoCuotaV2
-// Lo redirigimos a la nueva funcion sin tocar cada llamada individual
-function estadoCuotaV2(f) { return calcularEstadoTiempoReal(f); }
-
-function periodoLabel(p){ var a = p.split('-'); var m = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre']; return m[parseInt(a[1])-1] + ' ' + a[0]; }
-
-// -- RENDER SOCIOS ------------------------------------------------
+// Alias de compatibilidad
+function estadoCuotaV2(f) { return calcularEstadoTiempoReal(f); }// -- RENDER SOCIOS ------------------------------------------------
 function renderPlayers() {
   var busq = document.getElementById('busq').value.toLowerCase();
   var genF = document.getElementById('fGen').value, catF = document.getElementById('fCat').value;
@@ -1616,6 +1708,16 @@ html += '<div class="cuota-badge"><span class="cuota-pill ' + cl + '" title="'+_
   });
 
   if(_skipped > 0){ html += '<div style="grid-column:1/-1;text-align:center;padding:14px;"><p style="color:var(--muted);font-size:12px;">Mostrando 60 de ' + t + '. Usa filtros para acotar.</p></div>'; }
+
+  // Aviso si hay filtros activos y la carga todavia no termino
+  var hayFiltro = busq || (genF) || (catF) || (cuotaF) || (estF && estF !== 'Activos');
+  if(!CARGA_COMPLETA && hayFiltro) {
+    html += '<div style="grid-column:1/-1;background:rgba(201,162,39,.1);border:1px solid var(--secondary-border);border-radius:8px;padding:10px 16px;margin:4px 0;display:flex;align-items:center;gap:10px;">'
+      + '<span style="font-size:16px;">&#x23F3;</span>'
+      + '<span style="font-size:12px;color:var(--secondary);">Carga en progreso - estos resultados son parciales. Espera unos segundos y los filtros se actualizaran solos.</span>'
+      + '</div>';
+  }
+
   grid.innerHTML = html;
   var _s = function(id,v){ var el = document.getElementById(id); if(el) el.innerText = v; };
   _s('statT', t); _s('statM', m); _s('statF', fc); _s('statD', deu); _s('statV', pv);
@@ -1649,7 +1751,7 @@ function renderCuotas() {
     var pagado = pagosVigentes.reduce(function(s,c){ return s + Number(c[6]||0); }, 0);
     var ult = pagos.length ? pagos[pagos.length-1] : null;
     var hastaStr = pagosVigentes.length ? pagosVigentes.reduce(function(mx,c){ var h = parseDate(c[4]); return (!mx||h>mx)?h:mx; }, null) : null;
-    // Detectar cobros extraordinarios del perÃÂ­odo seleccionado
+    // Detectar cobros extraordinarios del perÃ?Â­odo seleccionado
     var _planNombes = (cv.planNom||'').split(' + ');
     var _extras = pagos.filter(function(p){
       var mesPago = normFecha((p[5]||'').toString()).substring(0,7);
@@ -1782,7 +1884,7 @@ function abrirModalPago(dni, nom, pl, hoja, mo, plSoc, moSoc) {
         }
       } else if(_sc.estado === 'parcial') {
         _badge = '<span style="background:rgba(255,193,7,.15);color:#ffc107;font-size:11px;padding:2px 8px;border-radius:10px;margin-left:6px;">'
-          + 'pago parcial Ã¢â¬â falta $' + Number(_sc.faltaPesos).toLocaleString('es-AR') + '</span>';
+          + 'pago parcial Ã¢â?¬â? falta $' + Number(_sc.faltaPesos).toLocaleString('es-AR') + '</span>';
         _montoSugerido = _sc.faltaPesos;
       } else if(_sc.estado === 'debe') {
         _badge = '<span style="background:rgba(220,53,69,.15);color:var(--red);font-size:11px;padding:2px 8px;border-radius:10px;margin-left:6px;">'
@@ -2479,7 +2581,7 @@ function enviarComprobanteEmail() {
 
 // -- EMOJI PICKER ------------------------------------------------
 var EMOJIS_DEPORTES = [
-  // Ã¢ââ¬Ã¢ââ¬ DEPORTES DE PELOTA Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬
+  // Ã¢â?â?¬Ã¢â?â?¬ DEPORTES DE PELOTA Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬
   {e:'\u26BD',n:'futbol soccer',c:'deporte'},
   {e:'\uD83C\uDFC0',n:'basquet basketball',c:'deporte'},
   {e:'\uD83C\uDFD0',n:'voley volleyball',c:'deporte'},
@@ -2494,21 +2596,21 @@ var EMOJIS_DEPORTES = [
   {e:'\uD83C\uDFD1',n:'hockey cesped',c:'deporte'},
   {e:'\uD83C\uDFD2',n:'hockey hielo',c:'deporte'},
 
-  // Ã¢ââ¬Ã¢ââ¬ DEPORTES DE COMBATE Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬
+  // Ã¢â?â?¬Ã¢â?â?¬ DEPORTES DE COMBATE Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬
   {e:'\uD83E\uDD4A',n:'boxeo boxing',c:'deporte'},
   {e:'\uD83E\uDD4B',n:'artes marciales judo karate taekwondo',c:'deporte'},
   {e:'\uD83E\uDD3C',n:'lucha wrestling',c:'deporte'},
   {e:'\uD83E\uDD3A',n:'esgrima',c:'deporte'},
   {e:'\uD83D\uDEE1\uFE0F',n:'defensa personal',c:'deporte'},
 
-  // Ã¢ââ¬Ã¢ââ¬ DEPORTES ACUÃÂTICOS Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬
+  // Ã¢â?â?¬Ã¢â?â?¬ DEPORTES ACUÃ?ÂTICOS Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬
   {e:'\uD83C\uDFCA',n:'natacion swimming',c:'deporte acuatico'},
   {e:'\uD83E\uDD3D',n:'polo acuatico waterpolo',c:'deporte acuatico'},
   {e:'\uD83C\uDFC4',n:'surf',c:'deporte acuatico'},
   {e:'\uD83E\uDD3F',n:'buceo snorkel',c:'deporte acuatico'},
   {e:'\uD83D\uDEA3',n:'remo kayak',c:'deporte acuatico'},
 
-  // Ã¢ââ¬Ã¢ââ¬ FITNESS Y GYM Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬
+  // Ã¢â?â?¬Ã¢â?â?¬ FITNESS Y GYM Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬
   {e:'\uD83C\uDFCB\uFE0F',n:'gimnasio pesas musculacion crossfit',c:'fitness'},
   {e:'\uD83D\uDCAA',n:'fuerza entrenamiento musculo',c:'fitness'},
   {e:'\uD83E\uDD38',n:'gimnasia acrobacia calistenia',c:'fitness'},
@@ -2519,16 +2621,16 @@ var EMOJIS_DEPORTES = [
   {e:'\u26F8\uFE0F',n:'patinaje hielo roller',c:'fitness deporte'},
   {e:'\uD83C\uDFBF',n:'esqui ski snowboard',c:'deporte invierno'},
 
-  // Ã¢ââ¬Ã¢ââ¬ YOGA Y BIENESTAR Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬
+  // Ã¢â?â?¬Ã¢â?â?¬ YOGA Y BIENESTAR Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬
   {e:'\uD83E\uDDD8',n:'yoga meditacion mindfulness pilates',c:'bienestar'},
-  {e:'\uD83C\uDF3F',n:'bienestar natural holÃÂ­stico',c:'bienestar'},
+  {e:'\uD83C\uDF3F',n:'bienestar natural holÃ?Â­stico',c:'bienestar'},
   {e:'\u262F\uFE0F',n:'zen tai chi chi kung equilibrio',c:'bienestar'},
   {e:'\uD83C\uDF38',n:'flores bienestar relajacion femenino',c:'bienestar'},
   {e:'\uD83D\uDC86',n:'masaje relajacion spa',c:'bienestar'},
   {e:'\uD83E\uDEC1',n:'respiracion pranayama',c:'bienestar'},
   {e:'\uD83C\uDF0A',n:'fluidez movimiento',c:'bienestar'},
 
-  // Ã¢ââ¬Ã¢ââ¬ DANZA Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬
+  // Ã¢â?â?¬Ã¢â?â?¬ DANZA Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬
   {e:'\uD83D\uDC83',n:'danza baile tango salsa flamenco latina mujer',c:'danza'},
   {e:'\uD83D\uDD7A',n:'danza baile disco urbano hombre',c:'danza'},
   {e:'\uD83E\uDE70',n:'ballet danza clasica',c:'danza'},
@@ -2536,7 +2638,7 @@ var EMOJIS_DEPORTES = [
   {e:'\uD83E\uDEA9',n:'disco dance aerobics zumba',c:'danza'},
   {e:'\uD83C\uDFAD',n:'teatro danza movimiento expresion',c:'danza teatro'},
 
-  // Ã¢ââ¬Ã¢ââ¬ ARTES AÃâ°REAS Y CIRCO Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬
+  // Ã¢â?â?¬Ã¢â?â?¬ ARTES AÃ?â?°REAS Y CIRCO Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬
   {e:'\uD83C\uDFAA',n:'circo espectaculo acrobacias',c:'aereo circo'},
   {e:'\uD83E\uDD38',n:'acrobacia aerea tela seda',c:'aereo circo'},
   {e:'\uD83E\uDE82',n:'tela aerea seda trapecio vuelo',c:'aereo circo'},
@@ -2546,7 +2648,7 @@ var EMOJIS_DEPORTES = [
   {e:'\uD83C\uDF00',n:'acrobacia espiral giro',c:'aereo circo'},
   {e:'\uD83C\uDFA0',n:'carrusel espectaculo',c:'aereo circo'},
 
-  // Ã¢ââ¬Ã¢ââ¬ TEATRO Y ACTUACIÃâN Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬
+  // Ã¢â?â?¬Ã¢â?â?¬ TEATRO Y ACTUACIÃ?â??N Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬
   {e:'\uD83C\uDFAD',n:'teatro actuacion drama comedia',c:'teatro'},
   {e:'\uD83C\uDFAC',n:'teatro cinematica direccion',c:'teatro'},
   {e:'\uD83C\uDFA4',n:'actuacion voz canto comedia musical',c:'teatro musica'},
@@ -2554,14 +2656,14 @@ var EMOJIS_DEPORTES = [
   {e:'\uD83E\uDD21',n:'comedia clown payaso',c:'teatro comedia'},
   {e:'\uD83D\uDE02',n:'comedia humor stand up',c:'comedia'},
   {e:'\uD83C\uDCCF',n:'improvisacion juego teatral',c:'teatro comedia'},
-  {e:'\uD83D\uDCE2',n:'voz proyeccion locuciÃÂ³n',c:'teatro'},
+  {e:'\uD83D\uDCE2',n:'voz proyeccion locuciÃ?Â³n',c:'teatro'},
   {e:'\uD83C\uDFA8',n:'artes escenicas expresion',c:'teatro'},
   {e:'\uD83E\uDE84',n:'magia ilusionismo',c:'teatro circo'},
   {e:'\uD83C\uDFA9',n:'magia teatro elegancia',c:'teatro'},
   {e:'\uD83D\uDC7A',n:'mascara teatro expresion',c:'teatro'},
   {e:'\uD83C\uDF9F\uFE0F',n:'espectaculo funcion evento',c:'teatro'},
 
-  // Ã¢ââ¬Ã¢ââ¬ MÃÅ¡SICA Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬
+  // Ã¢â?â?¬Ã¢â?â?¬ MÃ?Å¡SICA Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬
   {e:'\uD83C\uDFB5',n:'musica canto vocal',c:'musica'},
   {e:'\uD83C\uDFB6',n:'musica melodia armonia',c:'musica'},
   {e:'\uD83C\uDFB8',n:'guitarra rock banda',c:'musica'},
@@ -2573,9 +2675,9 @@ var EMOJIS_DEPORTES = [
   {e:'\uD83E\uDE98',n:'percusion latin ritmo',c:'musica'},
   {e:'\uD83C\uDFB7',n:'saxofon jazz blues',c:'musica'},
   {e:'\uD83C\uDFA4',n:'canto vocal coach',c:'musica'},
-  {e:'\uD83C\uDFBC',n:'composicion musica teorÃÂ­a',c:'musica'},
+  {e:'\uD83C\uDFBC',n:'composicion musica teorÃ?Â­a',c:'musica'},
 
-  // Ã¢ââ¬Ã¢ââ¬ COMEDIA MUSICAL Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬
+  // Ã¢â?â?¬Ã¢â?â?¬ COMEDIA MUSICAL Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬
   {e:'\uD83C\uDF1F',n:'estrella estrellato musical',c:'musical'},
   {e:'\u2728',n:'brillo show espectaculo musical',c:'musical'},
   {e:'\uD83C\uDF8A',n:'celebracion show gala',c:'musical'},
@@ -2584,7 +2686,7 @@ var EMOJIS_DEPORTES = [
   {e:'\uD83C\uDF80',n:'femenino elegante show',c:'musical'},
   {e:'\uD83D\uDC51',n:'rey reina estelar protagonista',c:'musical'},
 
-  // Ã¢ââ¬Ã¢ââ¬ IDIOMAS Y EDUCACIÃâN Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬
+  // Ã¢â?â?¬Ã¢â?â?¬ IDIOMAS Y EDUCACIÃ?â??N Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬
   {e:'\uD83D\uDCDA',n:'clases estudio academia',c:'educacion'},
   {e:'\u270F\uFE0F',n:'taller clase workshop',c:'educacion'},
   {e:'\uD83C\uDF93',n:'graduacion matricula certificacion',c:'educacion'},
@@ -2593,7 +2695,7 @@ var EMOJIS_DEPORTES = [
   {e:'\uD83D\uDD2C',n:'ciencias laboratorio',c:'educacion'},
   {e:'\uD83E\uDDEE',n:'matematicas calculos',c:'educacion'},
 
-  // Ã¢ââ¬Ã¢ââ¬ ADMINISTRACIÃâN Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬
+  // Ã¢â?â?¬Ã¢â?â?¬ ADMINISTRACIÃ?â??N Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬
   {e:'\uD83D\uDCCB',n:'planilla inscripcion lista',c:'admin'},
   {e:'\uD83D\uDCB0',n:'dinero pago cuota',c:'admin'},
   {e:'\uD83C\uDFC6',n:'trofeo copa campeonato',c:'admin'},
@@ -2637,7 +2739,7 @@ function filtrarEmojis(q) {
   renderEmojiGrid(lista);
 }
 function filtrarEmojisCat(cat) {
-  // Actualizar botÃÂ³n activo
+  // Actualizar botÃ?Â³n activo
   document.querySelectorAll('.emoji-cat-btn').forEach(function(btn){
     var btnCat = btn.getAttribute('onclick').match(/filtrarEmojisCat\('([^']*)'\)/)?.[1] || '';
     btn.classList.toggle('active', btnCat === cat);
@@ -2756,7 +2858,7 @@ function crearSimple(t, id) {
   callScript({action:'addComplexItem', tabName:t, rowArray:[v], pass:TOKEN, _noRetry:true}, inicializar, function(e){ ocultarLoader(); alert('Error: '+e); });
 }
 
-// Ã¢ââ¬Ã¢ââ¬ ABM PROFESORES Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬
+// Ã¢â?â?¬Ã¢â?â?¬ ABM PROFESORES Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬
 var profEditIdx = null;
 
 function renderListProfesores() {
@@ -2939,8 +3041,8 @@ function limpiarFormCat(){
   renderCatActsCheckboxes('');
 }
 
-// Ã¢ââ¬Ã¢ââ¬ INSCRIPCIONES MASIVAS Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬
-// Ã¢ââ¬Ã¢ââ¬ ABM PRECIOS (Actividad x Categoria) Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬Ã¢ââ¬
+// Ã¢â?â?¬Ã¢â?â?¬ INSCRIPCIONES MASIVAS Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬
+// Ã¢â?â?¬Ã¢â?â?¬ ABM PRECIOS (Actividad x Categoria) Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬Ã¢â?â?¬
 var precioEditIdx = null;
 
 function poblarSelectsPrecios() {
@@ -3307,6 +3409,7 @@ function setCards(cards){ document.getElementById('r-cards').innerHTML = cards.m
 function getMesSeleccionado(){ return document.getElementById('rMes').value; }
 function td(txt, cls){ return '<td' + (cls?' class="'+cls+'"':'') + '>' + txt + '</td>'; }
 function getRangoFechas(){ return {desde:document.getElementById('rDesde').value, hasta:document.getElementById('rHasta').value}; }
+function periodoLabel(p){ var a = p.split('-'); var m = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre']; return m[parseInt(a[1])-1] + ' ' + a[0]; }
 function normFecha(f) {
   if(!f) return '';
   var s = f.toString().trim();
@@ -3775,6 +3878,65 @@ window.onload = function() {
 };
 
 document.addEventListener('keydown',function(e){ if(e.key==='Escape'){ if(typeof cerrarModalPago==='function') cerrarModalPago(); if(typeof cerrarModal==='function') cerrarModal(); } });
+
+// -- DESCUENTO HERMANOS ------------------------------------------
+function cargarDescuentoHermanos() {
+  callScript({action:'getDescuentoHermanos', pass:TOKEN}, function(r){
+    if(r && r.ok) {
+      DESCUENTO_HNO_SUGERIDO = Number(r.monto) || 0;
+      var inp = document.getElementById('inp-desc-hno');
+      if(inp) inp.value = DESCUENTO_HNO_SUGERIDO || '';
+    }
+  }, function(){});
+}
+
+function guardarDescuentoHermanos() {
+  var monto = parseFloat(document.getElementById('inp-desc-hno').value) || 0;
+  mostrarLoader('Guardando...');
+  callScript({action:'saveDescuentoHermanos', monto:monto, pass:TOKEN, _noRetry:true}, function(r){
+    ocultarLoader();
+    DESCUENTO_HNO_SUGERIDO = monto;
+    toast('Descuento hermanos guardado: $' + monto.toLocaleString('es-AR'), 'ok');
+  }, function(e){ ocultarLoader(); alert('Error: '+e); });
+}
+
+function previewDescHno() {
+  var monto = parseFloat(document.getElementById('inp-desc-hno').value) || 0;
+  var prev = document.getElementById('desc-hno-preview');
+  var res  = document.getElementById('desc-hno-result');
+  var base = document.getElementById('desc-hno-base');
+  if(!prev || !res) return;
+  if(monto > 0) {
+    // Buscar precio ejemplo del primer plan disponible
+    var precioEjemplo = 10000;
+    if(DB.precios && DB.precios.length) precioEjemplo = DB.precios[0].monto || 10000;
+    if(base) base.innerText = '$' + precioEjemplo.toLocaleString('es-AR');
+    res.innerText = '$' + Math.max(0, precioEjemplo - monto).toLocaleString('es-AR');
+    prev.style.display = '';
+  } else {
+    prev.style.display = 'none';
+  }
+}
+
+function miAutoDescuentoHno() {
+  var hnoDe = document.getElementById('mi-hno-de').value.trim();
+  var inpDesc = document.getElementById('mi-descuento-hno');
+  var prev = document.getElementById('mi-descuento-preview');
+  if(!inpDesc) return;
+  if(hnoDe && DESCUENTO_HNO_SUGERIDO > 0) {
+    inpDesc.value = DESCUENTO_HNO_SUGERIDO;
+    // Mostrar preview del monto efectivo
+    var monto = parseFloat(document.getElementById('mi-monto').value) || 0;
+    if(prev && monto > 0) {
+      var efectivo = Math.max(0, monto - DESCUENTO_HNO_SUGERIDO);
+      prev.innerText = 'Monto efectivo: $' + efectivo.toLocaleString('es-AR') + ' (base $' + monto.toLocaleString('es-AR') + ' - $' + DESCUENTO_HNO_SUGERIDO.toLocaleString('es-AR') + ')';
+      prev.style.display = '';
+    }
+  } else if(!hnoDe) {
+    inpDesc.value = '';
+    if(prev) { prev.style.display = 'none'; prev.innerText = ''; }
+  }
+}
 
 function toggleFinanzas() {
   var panel = document.getElementById('fin-panel');
