@@ -1022,7 +1022,7 @@ header{background:var(--surface);border-bottom:2px solid var(--primary);padding:
 </div>
 
 <!-- VERSION BADGE -->
-<div id="vbadge" style="position:fixed;bottom:10px;right:10px;background:rgba(0,0,0,.7);border:1px solid var(--secondary);color:var(--secondary);font-family:'Barlow Condensed',sans-serif;font-size:11px;padding:3px 8px;border-radius:6px;z-index:9999;">v1.2.0</div>
+<div id="vbadge" style="position:fixed;bottom:10px;right:10px;background:rgba(0,0,0,.7);border:1px solid var(--secondary);color:var(--secondary);font-family:'Barlow Condensed',sans-serif;font-size:11px;padding:3px 8px;border-radius:6px;z-index:9999;">v1.0.0</div>
 
 <!-- PWA BANNER -->
 <div id="pwa-banner" style="display:none;position:fixed;bottom:0;left:0;right:0;z-index:9999;background:linear-gradient(135deg,var(--primary-dark),var(--bg));border-top:2px solid var(--primary);padding:14px 20px;align-items:center;gap:14px;">
@@ -3475,7 +3475,7 @@ function renderReporte() {
 }
 
 function setTablaHeaders(cols){ document.getElementById('r-thead').innerHTML = '<tr>' + cols.map(function(c){ return '<th>' + c + '</th>'; }).join('') + '</tr>'; }
-function setTablaRows(rows){ document.getElementById('r-tbody').innerHTML = rows.map(function(r){ return '<tr>' + r + '</tr>'; }).join(''); document.getElementById('r-empty').style.display = rows.length ? 'none' : ''; }
+function setTablaRows(rows){ document.getElementById('r-tbody').innerHTML = rows.join(''); document.getElementById('r-empty').style.display = rows.length ? 'none' : ''; }
 function setCards(cards){ document.getElementById('r-cards').innerHTML = cards.map(function(c){ return '<div class="r-card"><div class="r-card-val" style="color:' + (c.color||'var(--secondary)') + ';">' + c.val + '</div><div class="r-card-lbl">' + c.lbl + '</div></div>'; }).join(''); }
 function getMesSeleccionado(){ return document.getElementById('rMes').value; }
 function td(txt, cls){ return '<td' + (cls?' class="'+cls+'"':'') + '>' + txt + '</td>'; }
