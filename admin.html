@@ -1279,11 +1279,17 @@ function inicializar() {
   callScript({action:'getCuotas', pass:TOKEN, _noRetry:true}, function(r){
     if (r && r.cuotas) {
       r.cuotas = r.cuotas.map(function(c) {
-        var esDeSheets = c.length<=10 && isNaN(Number(c[0])) && !isNaN(Number(c[3]));
+        // Detectar si viene de la hoja Cuotas (no del sistema viejo de planes)
+        // Estructura: A=Periodo, B=FechaPago, C=Plan, D=DNI, E=Nombre, F=Monto, G=Metodo, H=Obs, I=Hasta, J=Saldo
+        // c[0]=Periodo (no es numero), c[3]=DNI (es numero)
+        var esDeSheets = isNaN(Number(c[0])) && !isNaN(Number(c[3])) && (c[3]||'').toString().trim() !== '';
         if (esDeSheets) {
-          var hasta = c[8]||c[1];
-          var saldoRow = (c[9]!==undefined&&c[9]!=='') ? parseFloat(c[9]) : null;
-          return [c[3],c[4],c[2],hasta,hasta,c[1],c[5],c[6],'',c[7]||'',saldoRow];
+          // Raw: c[0]=Desde, c[1]=Hasta, c[2]=Plan, c[3]=DNI, c[4]=Nombre
+          //      c[5]=Monto, c[6]=Metodo, c[7]=Obs, c[8]=FechaPago, c[9]=Saldo
+          var hasta     = c[1];  // col B = Periodo hasta
+          var fechaPago = c[8];  // col I = Fecha real del pago
+          var saldoRow  = (c[9]!==undefined&&c[9]!=='') ? parseFloat(c[9]) : null;
+          return [c[3], c[4], c[2], hasta, hasta, fechaPago, c[5], c[6], '', c[7]||'', saldoRow];
         }
         return c;
       });
@@ -1546,7 +1552,7 @@ function calcularEstadoTiempoReal(f) {
   }, 0);
   var planNom   = inscVigentes.map(function(i){ return i.plan; }).join(' + ');
 
-  // Calcular estado por cada inscripcion
+  // Calcular estado por cada inscripcion (solo pagos exactos por plan, sin historicos)
   var deudaTotal = 0, favorTotal = 0;
   var estadoPeor = 'ok';
   var prioridad  = {ok:0, parcial:1, debe:2};
@@ -1559,7 +1565,7 @@ function calcularEstadoTiempoReal(f) {
     if (!pm) return;
 
     var mD = insc.desde ? normFecha(insc.desde).substring(0,7) : '';
-    if (!mD || mD > mesHoy) return; // no empezï¿½?Â³ aï¿½?Âºn
+    if (!mD || mD > mesHoy) return; // no empezÃ³ aÃºn
 
     // Hasta: fecha de baja si tiene, sino mes actual
     var mH = insc.hasta ? normFecha(insc.hasta).substring(0,7) : mesHoy;
@@ -1569,15 +1575,15 @@ function calcularEstadoTiempoReal(f) {
     var mesesT = (parseInt(d2[0]) - parseInt(d1[0])) * 12 + (parseInt(d2[1]) - parseInt(d1[1])) + 1;
     if (mesesT < 1) mesesT = 1;
 
-    // Total pagado para esta actividad dentro del periodo
+    // Total pagado para esta actividad â€” solo pagos con plan exacto (sin historicos)
     var totalPagado = 0;
     (CUOTAS_DB.cuotas || []).forEach(function(row) {
       var docPago  = (row[0] || '').toString().trim();
       var concepto = (row[2] || '').toString().trim();
-      // row[5] = fechaPago, puede ser dd/MM/yyyy o yyyy-MM-dd
       var mesPago  = normFecha((row[5] || '').toString().trim()).substring(0, 7);
       var monto    = Number(row[6]) || 0;
       if (docPago !== dni) return;
+      if (concepto.indexOf('Historico') === 0) return; // historicos se aplican globalmente
       if (concepto !== insc.plan) return;
       if (mesPago < mD || mesPago > mH) return;
       totalPagado += monto;
@@ -1599,6 +1605,30 @@ function calcularEstadoTiempoReal(f) {
       vigente: !insc.hasta || normFecha(insc.hasta).substring(0,7) >= mesHoy
     });
   });
+
+  // Aplicar pagos historicos del MES ACTUAL como credito global
+  var creditoHistorico = 0;
+  (CUOTAS_DB.cuotas || []).forEach(function(row) {
+    var docPago  = (row[0] || '').toString().trim();
+    var concepto = (row[2] || '').toString().trim();
+    var mesPago  = normFecha((row[5] || '').toString().trim()).substring(0, 7);
+    if (docPago !== dni) return;
+    if (concepto.indexOf('Historico') !== 0) return;
+    if (mesPago !== mesHoy) return; // solo el mes corriente
+    creditoHistorico += Number(row[6]) || 0;
+  });
+
+  if (creditoHistorico > 0) {
+    if (creditoHistorico >= deudaTotal) {
+      var excedente = creditoHistorico - deudaTotal;
+      deudaTotal = 0;
+      // El excedente NO es saldo a favor â€” es pago historico ya consumido
+      if (estadoPeor !== 'none') estadoPeor = 'ok';
+    } else {
+      deudaTotal -= creditoHistorico;
+      if (deudaTotal === 0 && estadoPeor !== 'none') estadoPeor = 'ok';
+    }
+  }
 
   return {
     estado:          estadoPeor,
@@ -2565,9 +2595,9 @@ function enviarComprobanteEmail() {
   var datos = window._ultimoPago; if(!datos) return;
   datos.email = email;
   mostrarLoader('Enviando comprobante...');
-  callScript({action:'sendEmail', emailDest:email, asunto:'Comprobante de pago - ' + (INST.nombre||''), htmlBody:
+  callScript({action:'sendEmail', emailDest:email, logoUrl:(INST.logoUrl||''), asunto:'Comprobante de pago - ' + (INST.nombre||''), htmlBody:
     (function(){
-      var _logo = '';
+      var _logo = '<img src="cid:logo" style="width:80px;height:80px;object-fit:contain;background:white;border-radius:10px;padding:6px;" alt="">';
       var _nombre = INST.nombre || 'Club Atletico Excursionistas';
       var _plan = (datos.planAct||'') + (datos.plSoc ? ' + ' + datos.plSoc : '');
       var _monto = '$' + Number(datos.moTotal||0).toLocaleString('es-AR');
@@ -2581,7 +2611,7 @@ function enviarComprobanteEmail() {
         +'<table width="520" cellpadding="0" cellspacing="0" style="background:#0a0d0a;border-radius:14px;overflow:hidden;border:2px solid #1a7a3c;">'
         // Header verde con escudo
         +'<tr><td style="background:linear-gradient(135deg,#0f5228,#1a7a3c);padding:28px 32px;text-align:center;">'
-
+        +(_logo ? '<div style="margin-bottom:12px;">'+_logo+'</div>' : '')
         +'<div style="font-family:Arial Black,sans-serif;font-size:20px;font-weight:900;color:white;text-transform:uppercase;letter-spacing:2px;">'+_nombre+'</div>'
         +'<div style="font-size:12px;color:rgba(255,255,255,.7);margin-top:4px;text-transform:uppercase;letter-spacing:1px;">Comprobante de Pago</div>'
         +'</td></tr>'
